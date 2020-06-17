@@ -8,8 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "phoenix": "^1.5.3",
+    "v-tooltip": "^2.0.3",
+    "vue": "^2.6.11",
+    "vue-router": "^3.3.4",
+    "vue2-perfect-scrollbar": "^1.5.0",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
@@ -21,18 +27,9 @@
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
     "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
+      ".eslintrc.json"
+    ]
   },
   "browserslist": [
     "> 1%",
