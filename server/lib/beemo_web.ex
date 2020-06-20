@@ -22,6 +22,7 @@ defmodule BeemoWeb do
       use Phoenix.Controller, namespace: BeemoWeb
 
       import Plug.Conn
+      import BeemoWeb.Helper
       import BeemoWeb.Gettext
       alias BeemoWeb.Router.Helpers, as: Routes
     end
@@ -74,5 +75,18 @@ defmodule BeemoWeb do
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
+  end
+end
+
+defmodule BeemoWeb.Helper do
+  def respond(conn), do: Plug.Conn.send_resp(conn)
+
+  def respond(conn, code, data) when is_binary(data) do
+    Plug.Conn.send_resp(conn, code, data)
+  end
+
+  def respond(conn, code, data) do
+    payload = Jason.encode!(data)
+    Plug.Conn.send_resp(conn, code, payload)
   end
 end
