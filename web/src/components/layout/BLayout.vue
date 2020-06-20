@@ -2,7 +2,7 @@
   <div class="b-layout">
     <BHeader></BHeader>
     <BNavbar></BNavbar>
-    <BFooter></BFooter>
+    <!-- <BFooter></BFooter> -->
   </div>
 </template>
 
@@ -20,3 +20,9 @@ export default {
   },
 };
 </script>
+
+<style>
+body {
+  margin: 0;
+}
+</style>

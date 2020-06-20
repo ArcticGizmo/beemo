@@ -12,7 +12,6 @@ export class API {
 
   get(endpoint, config) {
     const url = this.fullname(endpoint);
-    console.dir(url)
     return axios.get(url, config);
   }
 
