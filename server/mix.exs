@@ -38,7 +38,13 @@ defmodule Beemo.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+
+      {:ecto_sql, "~> 3.0"},
+      {:postgrex, "~> 0.15.0"},
+
+      # this is a fix to work without OTP 22+
+      {:cowboy, "< 2.8.0", override: true},
     ]
   end
 
