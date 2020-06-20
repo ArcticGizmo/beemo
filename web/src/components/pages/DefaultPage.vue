@@ -18,10 +18,11 @@ export default {
       this.$api
         .get('public/hello')
         .then(resp => {
-          console.dir(data);
           this.response = resp;
         })
-        .catch(error => (this.response = resp));
+        .catch(error => {
+          this.response = error;
+        });
     },
   },
 };

@@ -1,4 +1,5 @@
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 export class API {
   constructor(hostname) {
@@ -11,6 +12,7 @@ export class API {
 
   get(endpoint, config) {
     const url = this.fullname(endpoint);
+    console.dir(url)
     return axios.get(url, config);
   }
 

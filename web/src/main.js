@@ -12,9 +12,8 @@ export function createApp() {
 
   // configure vue prototypes
   Vue.prototype.$hostname = hostname;
-  // @ts-ignore
-  Vue.prototype.$eventBus = new Vue(hostname);
-  Vue.prototype.$api = new API();
+  Vue.prototype.$eventBus = new Vue();
+  Vue.prototype.$api = new API(hostname);
 
   new Vue({
     render: h => h(App),

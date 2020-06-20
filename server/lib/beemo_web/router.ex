@@ -5,7 +5,7 @@ defmodule BeemoWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api/public", BeemoWeb do
+  scope "/public", BeemoWeb do
     pipe_through :api
 
     get "/hello", PageController, :hello
