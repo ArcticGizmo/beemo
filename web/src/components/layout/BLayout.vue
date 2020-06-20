@@ -16,7 +16,7 @@ export default {
   components: {
     BHeader,
     BNavbar,
-    BFooter
-  }
+    BFooter,
+  },
 };
 </script>
