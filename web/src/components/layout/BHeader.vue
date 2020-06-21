@@ -1,6 +1,6 @@
 <template>
-  <header id="b-header" role="banner">
-    <div class="nav-bar-btn">NavBar</div>
+  <header class="b-header" role="banner">
+    <div class="nav-bar-btn" @click="onNavToggle">NavBar</div>
     <div class="b-header-content">
       This is the header
     </div>
@@ -10,6 +10,11 @@
 <script>
 export default {
   name: 'BHeader',
+  methods: {
+    onNavToggle() {
+      this.$emit('nav-toggle');
+    },
+  },
 };
 </script>
 
@@ -32,7 +37,6 @@ header {
 }
 
 .b-header .nav-bar-btn {
-  position: absolute;
-  left: 0;
+  width: 4rem;
 }
 </style>

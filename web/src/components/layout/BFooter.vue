@@ -13,15 +13,12 @@ export default {
 <style>
 .b-footer {
   flex-shrink: 0;
-  min-bottom: 0;
   width: 100%;
   background-color: blue;
 }
 
 footer span {
   text-align: right;
-}
-.z2-footer-wrapper {
 }
 
 </style>
