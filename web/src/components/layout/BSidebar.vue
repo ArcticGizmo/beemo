@@ -39,7 +39,7 @@ export default {
   position: absolute;
   width: 100vw;
   min-height: calc(100% - 4rem);
-  background-color: rgba(0, 0, 0, 0.062);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .b-sidebar {
