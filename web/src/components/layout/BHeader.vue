@@ -1,6 +1,6 @@
 <template>
   <header class="b-header" role="banner">
-    <div class="nav-bar-btn" @click="onNavToggle">NavBar</div>
+    <div class="sidebar-btn" @click="onSidebarToggle">|||</div>
     <div class="b-header-content">
       This is the header
     </div>
@@ -11,8 +11,8 @@
 export default {
   name: 'BHeader',
   methods: {
-    onNavToggle() {
-      this.$emit('nav-toggle');
+    onSidebarToggle() {
+      this.$emit('sidebar-toggle');
     },
   },
 };
@@ -24,7 +24,7 @@ header {
   width: 100%;
   display: block;
   height: 4rem;
-  background-color: orange;
+  background-color: var(--b-darkest);
   display: flex;
 }
 
@@ -36,7 +36,7 @@ header {
   align-items: center;
 }
 
-.b-header .nav-bar-btn {
+.b-header .sidebar-btn {
   width: 4rem;
 }
 </style>
