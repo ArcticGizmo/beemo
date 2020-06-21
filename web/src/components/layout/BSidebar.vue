@@ -31,9 +31,9 @@ export default {
 <style>
 .b-sidebar {
   background-color: green;
-  position: fixed;
+  position: absolute;
   width: 12rem;
-  height: 100%;
+  min-height: calc(100% - 4rem);
 }
 
 .b-sidebar .element {
