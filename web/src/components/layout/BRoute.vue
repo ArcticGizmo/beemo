@@ -2,13 +2,20 @@
   <div class="b-route">
     <div class="header" @click="onHeaderClick">
       <BIcon class="route-icon" :icon="icon" />
-      <div class="name">{{ route.name }}</div>
+      <div class="name">{{ route.name }} {{ maxHeight }}</div>
       <div class="arrow-icon">
         <BIcon v-if="hasChildren" :icon="chevron" :rotation="open ? 0 : 180" />
       </div>
     </div>
     <div ref="children" :style="expandHeight" class="children">
-      <BRoute v-for="child in route.children" :key="child.fullPath" :route="child" />
+      <BRoute
+        v-for="child in route.children"
+        :key="child.fullPath"
+        :route="child"
+        :isChild="true"
+        @open="onOpen"
+        @close="onClose"
+      />
     </div>
   </div>
 </template>
@@ -25,6 +32,7 @@ export default {
   },
   props: {
     route: { type: Object, required: true },
+    isChild: { type: Boolean, default: false },
   },
   data: () => {
     return {
@@ -50,10 +58,26 @@ export default {
     onHeaderClick() {
       if (this.open) {
         this.open = false;
+        this.$emit('close', this.maxHeight);
         this.maxHeight = 0;
       } else {
         this.open = true;
         this.maxHeight = this.$refs.children.scrollHeight;
+        this.$emit('open', this.maxHeight);
+      }
+    },
+    onOpen(height) {
+      if (this.isChild) {
+        this.$emit('open', height);
+      } else {
+        this.maxHeight += height;
+      }
+    },
+    onClose(height) {
+      if (this.isChild) {
+        this.$emit('close', height);
+      } else {
+        this.maxHeight -= height;
       }
     },
   },

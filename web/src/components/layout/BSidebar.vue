@@ -12,32 +12,18 @@ import BIcon from '../layout/BIcon.vue';
 import BeemoIcon from '../icons/Beemo.vue';
 import BRoute from './BRoute.vue';
 
-function parseRoutes(routes, currentRoute) {
-  const currentPath = (currentRoute || {}).fullPath || '';
-  return routes.map(r => {
-    const children = (r.children || []).map(c => {
-      const fullPath = `${r.path}/${c.path}`;
-      return {
-        name: c.name,
-        path: c.path,
-        fullPath,
-        selected: fullPath === currentPath,
-      };
-    });
+function parseRoute(route, absPath) {
+  const fullPath = absPath ? `${absPath}/${route.path}` : route.path;
 
-    const hasSelectedChild = children.some(c => c.selected);
-    const isSelected = r.path === currentPath;
-    return {
-      open: hasSelectedChild,
-      children,
-      hasChildren: children.length > 0,
-      name: r.name,
-      path: r.path,
-      fullPath: r.path,
-      selected: isSelected,
-    };
-  });
+  const children = (route.children || []).map(c => parseRoute(c, fullPath));
+
+  return {
+    name: route.name,
+    fullPath,
+    children,
+  };
 }
+
 export default {
   name: 'BNavbar',
   props: {
@@ -69,7 +55,7 @@ export default {
   },
   methods: {
     setRoutes(routes, curRoute) {
-      this.routes = parseRoutes(routes, curRoute);
+      this.routes = routes.map(r => parseRoute(r, ''));
     },
     onItemClick(path) {
       this.$emit('select', path);
