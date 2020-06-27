@@ -1,45 +1,75 @@
 <template>
   <div class="b-route">
-    <div class="header">
+    <div class="header" @click="onHeaderClick">
       <BIcon class="route-icon" :icon="icon" />
       <div class="name">{{ route.name }}</div>
-      <BIcon class="arrow-icon" :icon="chevron" :rotation="180" />
+      <div class="arrow-icon">
+        <BIcon v-if="hasChildren" :icon="chevron" :rotation="open ? 0 : 180" />
+      </div>
     </div>
-    <div class="children"></div>
+    <div ref="children" :style="expandHeight" class="children">
+      <BRoute v-for="child in route.children" :key="child.fullPath" :route="child" />
+    </div>
   </div>
 </template>
 
 <script>
 import BIcon from './BIcon.vue';
 import ControllerIcon from '../icons/Controller.vue';
-import ChevronIcon from '../icons/Chevron.vue'
+import ChevronIcon from '../icons/Chevron.vue';
 
 export default {
   name: 'BRoute',
   components: {
     BIcon,
   },
+  props: {
+    route: { type: Object, required: true },
+  },
   data: () => {
     return {
       icon: ControllerIcon,
       chevron: ChevronIcon,
+      open: false,
+      maxHeight: 0,
     };
   },
-  props: {
-    route: { type: Object, required: true },
+  computed: {
+    hasChildren() {
+      return (this.route.children || []).length > 0;
+    },
+    childHeightStyle() {
+      const height = this.open ? '2rem' : 0;
+      return `max-height: ${height}`;
+    },
+    expandHeight() {
+      return `max-height: ${this.maxHeight}px`;
+    },
+  },
+  methods: {
+    onHeaderClick() {
+      if (this.open) {
+        this.open = false;
+        this.maxHeight = 0;
+      } else {
+        this.open = true;
+        this.maxHeight = this.$refs.children.scrollHeight;
+      }
+    },
   },
 };
 </script>
 
 <style>
 .b-route {
-  width: 100%;
-  height: 2rem;
+  min-height: 2rem;
   border: 1px solid green;
 }
 
 .b-route .header {
   display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 .b-route .route-icon {
@@ -54,6 +84,21 @@ export default {
 
 .b-route .arrow-icon {
   width: 2rem;
-  padding: 0 10px;
+  padding: 2px;
+}
+
+.b-route .arrow-icon .b-icon {
+  height: 100%;
+  width: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.b-route .children {
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.b-route .children .b-route {
+  padding-left: 2rem;
 }
 </style>

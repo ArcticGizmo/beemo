@@ -8,6 +8,9 @@ Vue.use(VueRouter);
 
 const ROUTES = [
   { name: 'Home', path: '/home', component: Home },
+
+  { name: 'Sport', path: '/sport', component: Home },
+  { name: 'Default Page', path: '/default', component: DefaultPage },
   {
     name: 'Games',
     path: '/games',
@@ -17,6 +20,18 @@ const ROUTES = [
         name: 'Tick-Tack-Toe',
         path: 'tick_tack_toe',
         component: Home,
+        children: [
+          {
+            name: 'Tick-Tack-Toe',
+            path: 'tick_tack_toe',
+            component: Home,
+          },
+          {
+            name: 'Squares',
+            path: 'squares',
+            component: Home,
+          },
+        ],
       },
       {
         name: 'Squares',
@@ -25,8 +40,6 @@ const ROUTES = [
       },
     ],
   },
-  { name: 'Sport', path: '/sport', component: Home },
-  { name: 'Default Page', path: '/default', component: DefaultPage },
 ];
 
 export function createRouter() {

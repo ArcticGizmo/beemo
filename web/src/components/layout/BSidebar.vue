@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" class="b-sidebar-wrapper">
     <div class="b-sidebar">
-      <BRoute v-for="(route, index) in routes" :key="index" :route="route" />
+      <BRoute v-for="route in routes" :key="route.fullPath" :route="route" />
     </div>
     <div class="b-sidebar-outer" @click="onOuterClick"></div>
   </div>
@@ -33,6 +33,7 @@ function parseRoutes(routes, currentRoute) {
       hasChildren: children.length > 0,
       name: r.name,
       path: r.path,
+      fullPath: r.path,
       selected: isSelected,
     };
   });
