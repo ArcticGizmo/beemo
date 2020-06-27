@@ -22,7 +22,7 @@ export default {
   },
   data: () => {
     return {
-      showSidebar: true,
+      showSidebar: false,
     };
   },
   methods: {

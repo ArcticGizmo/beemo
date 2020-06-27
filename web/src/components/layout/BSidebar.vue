@@ -1,9 +1,18 @@
 <template>
-  <div v-if="show" class="b-sidebar-wrapper">
-    <div class="b-sidebar">
-      <BRoute v-for="route in routes" :key="route.fullPath" :route="route" :icon="route.icon" />
-    </div>
-    <div class="b-sidebar-outer" @click="onOuterClick"></div>
+  <div class="b-sidebar-wrapper">
+    <transition name="slide-fade">
+      <div v-if="show" class="b-sidebar">
+        <BRoute
+          v-for="route in routes"
+          :key="route.fullPath"
+          :route="route"
+          :icon="route.icon"
+          @select="onRouteSelect"
+        />
+      </div>
+    </transition>
+
+    <div v-if="show" class="b-sidebar-outer" @click="onOuterClick"></div>
   </div>
 </template>
 
@@ -56,9 +65,9 @@ export default {
   },
   methods: {
     setRoutes(routes, curRoute) {
-      this.routes = routes.map(r => parseRoute(r, ''));
+      this.routes = routes.filter(r => r.path !== '*').map(r => parseRoute(r, ''));
     },
-    onItemClick(path) {
+    onRouteSelect(path) {
       this.$emit('select', path);
       const curRoute = this.$route;
       if (!curRoute || curRoute.fullPath !== path) {
@@ -100,5 +109,18 @@ export default {
   position: fixed;
   width: 100vw;
   height: 100vh;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.2s ease;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
 }
 </style>

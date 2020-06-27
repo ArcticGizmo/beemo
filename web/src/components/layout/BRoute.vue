@@ -18,6 +18,7 @@
         :isChild="true"
         @open="onOpen"
         @close="onClose"
+        @select="$emit('select', $event)"
       />
     </div>
   </div>
@@ -60,10 +61,7 @@ export default {
   methods: {
     onHeaderClick() {
       if (!this.hasChildren) {
-        const curPath = (this.$route || {}).fullPath;
-        if (curPath !== this.route.fullPath) {
-          this.$router.push(this.route.fullPath);
-        }
+        this.$emit('select', this.route.fullPath);
       } else {
         this.toggleOpen();
       }
@@ -134,7 +132,6 @@ export default {
   height: 100%;
   /* height: 1rem; */
   /* padding: 5px; */
-
 }
 
 .b-route .arrow-icon .b-icon {

@@ -8,8 +8,8 @@ import ControllerIcon from './components/icons/Controller.vue';
 Vue.use(VueRouter);
 
 const ROUTES = [
+  { path: '*', redirect: '/games/tick_tack_toe'},
   { name: 'Home', path: '/home', component: Home },
-
   { name: 'Sport', path: '/sport', component: Home },
   { name: 'Default Page', path: '/default', component: DefaultPage },
   {
@@ -22,18 +22,6 @@ const ROUTES = [
         name: 'Tick-Tack-Toe',
         path: 'tick_tack_toe',
         component: Home,
-        children: [
-          {
-            name: 'Tick-Tack-Toe',
-            path: 'tick_tack_toe',
-            component: Home,
-          },
-          {
-            name: 'Squares',
-            path: 'squares',
-            component: Home,
-          },
-        ],
       },
       {
         name: 'Squares',
