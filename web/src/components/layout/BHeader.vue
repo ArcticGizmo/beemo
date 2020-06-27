@@ -1,6 +1,6 @@
 <template>
   <header class="b-header" role="banner">
-    <div class="sidebar-btn" @click="onSidebarToggle">|||</div>
+    <BIcon class="sidebar-btn" :icon="menuIcon" :scale="0.5" @click.native="onSidebarToggle" />
     <BIcon class="logo" :icon="beemoIcon" />
     <slot class="b-header-content"></slot>
   </header>
@@ -9,6 +9,7 @@
 <script>
 import BIcon from '../layout/BIcon.vue';
 import BeemoIcon from '../icons/Beemo.vue';
+import MenuIcon from '../icons/Menu.vue';
 
 export default {
   name: 'BHeader',
@@ -18,6 +19,7 @@ export default {
   data: () => {
     return {
       beemoIcon: BeemoIcon,
+      menuIcon: MenuIcon,
     };
   },
   methods: {
@@ -47,7 +49,8 @@ header {
 }
 
 .b-header .sidebar-btn {
-  width: 4rem;
+  cursor: pointer;
+  height: 100%;
 }
 
 .b-header .logo {
