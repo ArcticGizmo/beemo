@@ -1,5 +1,5 @@
 <template>
-  <div class="b-sidebar-wrapper">
+  <div v-show="show" class="b-sidebar-wrapper">
     <transition name="slide-fade">
       <div v-if="show" class="b-sidebar">
         <BRoute
@@ -12,7 +12,7 @@
       </div>
     </transition>
 
-    <div v-if="show" class="b-sidebar-outer" @click="onOuterClick"></div>
+    <div class="b-sidebar-outer" @click="onOuterClick"></div>
   </div>
 </template>
 
