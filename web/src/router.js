@@ -11,13 +11,16 @@ const ROUTES = [
   {
     name: 'Games',
     path: '/games',
+    component: Home,
     children: [
       {
-        path: '/tick_tack_toe',
+        name: 'Tick-Tack-Toe',
+        path: 'tick_tack_toe',
         component: Home,
       },
       {
-        path: '/squares',
+        name: 'Squares',
+        path: 'squares',
         component: Home,
       },
     ],

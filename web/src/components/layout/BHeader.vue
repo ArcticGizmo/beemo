@@ -8,7 +8,7 @@
 
 <script>
 import BIcon from '../layout/BIcon.vue';
-import BeemoIcon from '../icons/beemo.vue';
+import BeemoIcon from '../icons/Beemo.vue';
 
 export default {
   name: 'BHeader',

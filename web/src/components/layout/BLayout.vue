@@ -50,6 +50,7 @@ export default {
   --blue: #d1e9e2;
 
   --b-normal: #253037;
+  --b-darkish: #1f282e;
   --b-dark: #1E262C;
   --b-darkest: #1B232A;
 

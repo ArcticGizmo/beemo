@@ -77,6 +77,6 @@ export default {
 <style>
 .b-icon {
   height: 2rem;
-  transform-origin: 0 0;
+  transform-origin: 50% 50%;
 }
 </style>

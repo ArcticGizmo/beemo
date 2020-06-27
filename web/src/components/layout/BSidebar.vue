@@ -1,45 +1,22 @@
 <template>
   <div v-if="show" class="b-sidebar-wrapper">
     <div class="b-sidebar">
-      <div class="element-wrapper" v-for="route in routes" :key="route.path">
-        <div v-if="!route.path" class="separator">Separator</div>
-        <div
-          v-else-if="!route.hasChildren"
-          class="route"
-          :class="{ selected: route.selected }"
-          @click="onItemClick(route.path)"
-        >
-          simple {{ route.name }}
-        </div>
-        <div v-else class="route-parent" :class="{ selected: route.selected }">
-          <div class="heading">
-            <div class="route-name">-- {{ route.name }} {{ route.open }}</div>
-            <div class="arrow" @click="onArrowClick(route)">arrow</div>
-          </div>
-          <div v-show="route.open" class="sub-children" :class="route.open ? 'open' : 'closed'">
-            <div
-              class="route"
-              :class="{ selected: child.selected }"
-              v-for="child in route.children"
-              :key="child.fullPath"
-              @click="onItemClick(child.fullPath)"
-            >
-              c -- {{ child.name }}
-            </div>
-          </div>
-        </div>
-      </div>
+      <BRoute v-for="(route, index) in routes" :key="index" :route="route" />
     </div>
     <div class="b-sidebar-outer" @click="onOuterClick"></div>
   </div>
 </template>
 
 <script>
+import BIcon from '../layout/BIcon.vue';
+import BeemoIcon from '../icons/Beemo.vue';
+import BRoute from './BRoute.vue';
+
 function parseRoutes(routes, currentRoute) {
   const currentPath = (currentRoute || {}).fullPath || '';
   return routes.map(r => {
     const children = (r.children || []).map(c => {
-      const fullPath = `${r.path}${c.path}`;
+      const fullPath = `${r.path}/${c.path}`;
       return {
         name: c.name,
         path: c.path,
@@ -65,9 +42,14 @@ export default {
   props: {
     show: { type: Boolean, default: false },
   },
+  components: {
+    BIcon,
+    BRoute,
+  },
   data: () => {
     return {
       routes: [],
+      icon: BeemoIcon,
     };
   },
   watch: {
@@ -130,34 +112,5 @@ export default {
   position: fixed;
   width: 100vw;
   height: 100vh;
-}
-
-.b-sidebar .route,
-.b-sidebar .route-parent {
-  width: 100%;
-  min-height: 4rem;
-  border: 1px solid grey;
-}
-
-.b-sidebar .route:hover,
-.b-sidebar .route-parent:hover {
-  opacity: 0.75;
-}
-
-.b-sidebar .heading {
-  display: flex;
-}
-
-.b-sidebar .heading .route-name {
-  width: 100%;
-}
-
-.b-sidebar .heading .arrow {
-  width: 2rem;
-  border: 1px solid orange;
-}
-
-.b-sidebar .selected {
-  border: 2px solid green;
 }
 </style>
