@@ -6,7 +6,7 @@
       </div>
       <div class="name">{{ route.name }}</div>
       <div class="arrow-icon">
-        <BIcon v-if="hasChildren" :icon="chevron" :rotation="open ? 0 : 180" />
+        <BIcon v-if="hasChildren" :icon="chevron" :scale="0.65" :rotation="open ? 0 : 180" />
       </div>
     </div>
     <div ref="children" :style="expandHeight" class="children">
@@ -126,12 +126,18 @@ export default {
 
 .b-route .arrow-icon {
   width: 2rem;
-  padding: 2px;
+  height: 2rem;
+  /* padding: 10px; */
 }
 
 .b-route .arrow-icon .b-icon {
   height: 100%;
-  width: 100%;
+  /* height: 1rem; */
+  /* padding: 5px; */
+
+}
+
+.b-route .arrow-icon .b-icon {
   transition: transform 0.5s ease-in-out;
 }
 

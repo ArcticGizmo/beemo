@@ -1,12 +1,13 @@
 <template>
-  <component
-    class="b-icon"
-    :is="icon"
-    :viewBox="computedViewBox"
-    :preserveAsectRatio="aspectRatio"
-    :transform="transform"
-  >
-  </component>
+  <div class="b-icon">
+    <component
+      class="b-icon"
+      :is="icon"
+      :viewBox="computedViewBox"
+      :preserveAsectRatio="aspectRatio"
+      :transform="transform"
+    />
+  </div>
 </template>
 
 <script>
