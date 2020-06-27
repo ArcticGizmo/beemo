@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" class="b-sidebar-wrapper">
     <div class="b-sidebar">
-      <BRoute v-for="route in routes" :key="route.fullPath" :route="route" />
+      <BRoute v-for="route in routes" :key="route.fullPath" :route="route" :icon="route.icon" />
     </div>
     <div class="b-sidebar-outer" @click="onOuterClick"></div>
   </div>
@@ -19,6 +19,7 @@ function parseRoute(route, absPath) {
 
   return {
     name: route.name,
+    icon: route.icon,
     fullPath,
     children,
   };

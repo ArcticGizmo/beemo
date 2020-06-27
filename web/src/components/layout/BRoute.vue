@@ -1,8 +1,10 @@
 <template>
   <div class="b-route">
     <div class="header" @click="onHeaderClick">
-      <BIcon class="route-icon" :icon="icon" />
-      <div class="name">{{ route.name }} {{ maxHeight }}</div>
+      <div class="route-icon">
+        <BIcon :icon="icon" />
+      </div>
+      <div class="name">{{ route.name }}</div>
       <div class="arrow-icon">
         <BIcon v-if="hasChildren" :icon="chevron" :rotation="open ? 0 : 180" />
       </div>
@@ -12,6 +14,7 @@
         v-for="child in route.children"
         :key="child.fullPath"
         :route="child"
+        :icon="child.icon"
         :isChild="true"
         @open="onOpen"
         @close="onClose"
@@ -22,7 +25,7 @@
 
 <script>
 import BIcon from './BIcon.vue';
-import ControllerIcon from '../icons/Controller.vue';
+import DefaultIcon from '../icons/Line.vue';
 import ChevronIcon from '../icons/Chevron.vue';
 
 export default {
@@ -32,11 +35,11 @@ export default {
   },
   props: {
     route: { type: Object, required: true },
+    icon: { type: Object, default: () => DefaultIcon },
     isChild: { type: Boolean, default: false },
   },
   data: () => {
     return {
-      icon: ControllerIcon,
       chevron: ChevronIcon,
       open: false,
       maxHeight: 0,
@@ -56,6 +59,16 @@ export default {
   },
   methods: {
     onHeaderClick() {
+      if (!this.hasChildren) {
+        const curPath = (this.$route || {}).fullPath;
+        if (curPath !== this.route.fullPath) {
+          this.$router.push(this.route.fullPath);
+        }
+      } else {
+        this.toggleOpen();
+      }
+    },
+    toggleOpen() {
       if (this.open) {
         this.open = false;
         this.$emit('close', this.maxHeight);
@@ -87,13 +100,18 @@ export default {
 <style>
 .b-route {
   min-height: 2rem;
-  border: 1px solid green;
 }
 
 .b-route .header {
+  cursor: pointer;
+  user-select: none;
   display: flex;
   height: 100%;
   width: 100%;
+}
+
+.b-route .header:hover {
+  background-color: rgba(255, 255, 255, 0.068);
 }
 
 .b-route .route-icon {

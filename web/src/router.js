@@ -3,6 +3,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import DefaultPage from './components/pages/DefaultPage.vue';
+import ControllerIcon from './components/icons/Controller.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,7 @@ const ROUTES = [
     name: 'Games',
     path: '/games',
     component: Home,
+    icon: ControllerIcon,
     children: [
       {
         name: 'Tick-Tack-Toe',
