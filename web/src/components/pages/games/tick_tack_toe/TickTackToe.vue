@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import { launch } from './tick_tack_toe.js';
+// import { launch } from './tick_tack_toe.js';
+import { launch } from "./game.js";
 
 export default {
   name: 'TickTackToe',
@@ -18,7 +19,8 @@ export default {
     };
   },
   mounted() {
-    this.game = launch(this.gameId);
+    // this.game = launch(this.gameId);
+    this.game=  launch(this.gameId);
   },
   methods: {},
 };
