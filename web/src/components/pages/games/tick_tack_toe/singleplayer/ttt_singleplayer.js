@@ -1,20 +1,21 @@
 import Phaser from 'phaser';
 import Boot from './boot.js';
-import Preload from './preload.js';
 import Menu from './menu.js';
+import GameOver from "./game_over.js";
 
 const COLORS = {
-  WHITE: '#ffffff',
-  BLACK: '#000000',
-  RED: '#ff0000',
-  GREEN: '#00ff00',
-  BLUE: '#0000ff',
+  WHITE: '0xffffff',
+  BLACK: '0x000000',
+  RED: '#0xf0000',
+  GREEN: '0x00ff00',
+  BLUE: '0x0000ff',
+  GRAY: '0x808080',
 };
 
 export default class TTTSingleplayer {
   constructor(containerId, size = 300) {
     // scenes
-    const scenes = [Boot, Preload, Menu];
+    const scenes = [Boot, Menu, GameOver];
 
     // game config
     this.config = {

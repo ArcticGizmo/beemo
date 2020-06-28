@@ -13,6 +13,6 @@ export default class Boot extends Phaser.Scene {
 
   create() {
     this.resize();
-    this.scene.start('Preload');
+    this.scene.start('Menu');
   }
 }

@@ -12,6 +12,23 @@ export default class Menu extends Phaser.Scene {
   preload() {}
 
   create() {
-    this.text = this.add.text(0, 0, 'Menu').setColor(this.CONFIG.colors.BLACK);
+    this.text = this.add
+      .text(this.CONFIG.centerX, this.CONFIG.centerY, 'Menu')
+      .setOrigin(0.5)
+      .setColor(this.CONFIG.colors.BLACK)
+      .setInteractive()
+      .on('pointerdown', () => this.openGameOver());
+  }
+
+  openGameOver() {
+    this.scene.pause();
+    this.scene.launch('GameOver');
+
+    this.scene.get('GameOver').events.on('gameover:restart', () => this.closeGameOver());
+  }
+
+  closeGameOver() {
+    this.scene.stop('GameOver');
+    this.scene.resume();
   }
 }
