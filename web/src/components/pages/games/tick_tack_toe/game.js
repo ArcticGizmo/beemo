@@ -1,10 +1,11 @@
+import Phaser from 'phaser';
+
 // https://phaser.io/examples/v3/view/input/mouse/circle-hit-area
 // https://phaser.io/examples/v3/view/game-objects/shapes/circle
 // https://phaser.io/examples/v3/view/game-objects/graphics/primitives/rectangle-gradient-filled
-import Phaser from 'phaser';
 
 const BLACK = 0x000000;
-const RED = 0xff0000;
+const GREEN = 0x00ff00;
 
 function createEmptyCells() {
   const grid = [];
@@ -24,6 +25,7 @@ class GameState {
     this._player = 0;
     this._letters = ['X', 'O'];
     this._cells = createEmptyCells();
+    this._winner = '';
 
     // add game objects for each cell
     gridAreas.forEach(row => {
@@ -40,19 +42,55 @@ class GameState {
     });
   }
 
+  restart() {
+    this._cells.forEach(row => {
+      row.forEach(cell => {
+        cell.player = null;
+        cell.letter = '';
+      });
+    });
+    this._winner = null;
+    this.updatePlacements();
+  }
+
   updatePlacements() {
-    console.dir('--- updating board');
     this._cells.forEach(row => {
       row.forEach(col => {
         col.text.setText(col.letter);
+        if (col.isWinner) {
+          col.text.setTint(GREEN);
+        } else {
+          col.text.clearTint();
+        }
       });
     });
   }
 
-  checkWinner() {}
+  // returns a cells that make up a win
+  getWinningCells(cell) {
+    if (!cell || !cell.letter) {
+      return null;
+    }
+
+    const { row, col } = cell;
+
+    return [
+      getVertical(this._cells, col),
+      getHorizontal(this._cells, row),
+      getDiag(this._cells, row, col),
+      getAntiDiag(this._cells, row, col),
+    ].find(cells => {
+      return cells.length === 3 && cells.every(c => c.letter === cell.letter);
+    });
+  }
 
   setLetter(row, col, player) {
     const cell = this._cells[row][col];
+
+    if (this._winner) {
+      console.log('[TTT] Cannot continue when there is a winner. Please restart');
+      return;
+    }
 
     if (!cell) {
       console.error(`[TTT] Invalid cell (${row}, ${col})`);
@@ -77,13 +115,65 @@ class GameState {
     const letter = this._letters[player];
     cell.player = player;
     cell.letter = letter;
-    this.switchPlayer();
+    const winningCells = this.getWinningCells(cell);
+    console.dir(winningCells);
+    if (winningCells) {
+      this._winner = this._letters[this._player];
+      winningCells.forEach(cell => (cell.isWinner = true));
+    } else {
+      this.switchPlayer();
+    }
     this.updatePlacements();
   }
 
   switchPlayer() {
     this._player = this._player === 0 ? 1 : 0;
   }
+}
+
+function getVertical(cells, col) {
+  return cells.map(row => row[col]);
+}
+
+function getHorizontal(cells, row) {
+  return cells[row];
+}
+
+function getDiag(cells, row, col) {
+  const start = cells[row][col];
+  const topLeft = getAllAdj(cells, row, col, -1, -1);
+  const bottomRight = getAllAdj(cells, row, col, 1, 1);
+
+  return topLeft.concat([start]).concat(bottomRight);
+}
+
+function getAntiDiag(cells, row, col) {
+  const start = cells[row][col];
+  const topRight = getAllAdj(cells, row, col, -1, 1);
+  const bottomLeft = getAllAdj(cells, row, col, 1, -1);
+
+  return topRight.concat([start]).concat(bottomLeft);
+}
+
+function getAllAdj(cells, row, col, dRow, dCol, journey = []) {
+  const nextCell = getAdj(cells, row, col, dRow, dCol);
+  if (!nextCell) {
+    return journey;
+  }
+
+  journey.push(nextCell);
+  return getAllAdj(cells, nextCell.row, nextCell.col, dRow, dCol, journey);
+}
+
+function getAdj(cells, row, col, dRow, dCol) {
+  const r = row + dRow;
+  const c = col + dCol;
+
+  if (c < 0 || r < 0 || c > 2 || r > 2) {
+    return null;
+  }
+
+  return cells[r][c];
 }
 
 export function launch(containerId, width = 500, height = 500) {
@@ -121,6 +211,7 @@ function create() {
   const grid = createGridAreas.bind(this)(widthSpacing, heightSpacing);
 
   this.$state = new GameState(grid);
+  this.restart = this.$state.restart();
 }
 
 function createBackground() {
