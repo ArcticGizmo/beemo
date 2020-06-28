@@ -21,7 +21,7 @@ function createEmptyCells() {
 }
 
 class GameState {
-  constructor(gridAreas) {
+  constructor(gridAreas, winningArea) {
     this._player = 0;
     this._letters = ['X', 'O'];
     this._cells = createEmptyCells();
@@ -51,6 +51,14 @@ class GameState {
     });
     this._winner = null;
     this.updatePlacements();
+  }
+
+  showWinner() {
+    
+  }
+
+  hideWinner() {
+
   }
 
   updatePlacements() {
