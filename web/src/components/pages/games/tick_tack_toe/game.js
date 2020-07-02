@@ -21,7 +21,7 @@ function createEmptyCells() {
 }
 
 class GameState {
-  constructor(gridAreas, winningArea) {
+  constructor(gridAreas) {
     this._player = 0;
     this._letters = ['X', 'O'];
     this._cells = createEmptyCells();

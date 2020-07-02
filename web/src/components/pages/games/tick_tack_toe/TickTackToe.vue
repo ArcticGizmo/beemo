@@ -1,31 +1,91 @@
 <template>
   <div class="tick-tack-toe">
     <div class="game-area">
-      <div :id="gameId"></div>
+      <div class="grid">
+        <div
+          class="grid-cell"
+          :class="{ vacant: !cell.value }"
+          v-for="cell in grid"
+          :key="cell.index"
+          @click="onCellClick(cell)"
+        >
+          <BIcon class="letter" :icon="getIcon(cell.value)" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-// import { launch } from './tick_tack_toe.js';
-// import { launch } from "./game.js";
-import TTTSingleplayer from './singleplayer/ttt_singleplayer.js';
+import BIcon from '../../../layout/BIcon.vue';
+import XIcon from './XIcon.vue';
+import OIcon from './OIcon.vue';
+
+function fill1DArray(num, callback = () => null) {
+  const arr = [];
+  for (let i = 0; i < num; i++) {
+    arr.push(callback(i));
+  }
+  return arr;
+}
+
+function divMod(x, y) {
+  const quotient = Math.floor(y / x);
+  const rem = y % x;
+  return [quotient, rem];
+}
+
+function createGrid() {
+  return fill1DArray(9, index => {
+    const [row, col] = divMod(3, index);
+    return {
+      index,
+      row,
+      col,
+      value: null,
+    };
+  });
+}
 
 export default {
   name: 'TickTackToe',
+  components: {
+    BIcon,
+  },
   data: () => {
     return {
-      gameId: 'tick_tack_toe',
       game: null,
+      player: 0,
+      letters: ['X', 'O'],
+      grid: createGrid(),
     };
   },
-  mounted() {
-    // this.game = launch(this.gameId);
-    // this.game=  launch(this.gameId);
-    this.game = new TTTSingleplayer(this.gameId);
-    window.addEventListener('resize', () => this.game.resize());
+  methods: {
+    onCellClick(cell) {
+      if (cell.value) {
+        console.dir('[TTT] Player already occupied');
+        return;
+      }
+
+      cell.value = this.getLetter();
+      this.swapPlayer();
+    },
+    swapPlayer() {
+      this.player = this.player ? 0 : 1;
+    },
+    getLetter() {
+      return this.letters[this.player];
+    },
+    getIcon(value) {
+      switch (value) {
+        case 'X':
+          return XIcon;
+        case 'O':
+          return OIcon;
+      }
+      return null;
+    },
   },
-  methods: {},
 };
 </script>
 
@@ -33,5 +93,29 @@ export default {
 .tick-tack-toe .game-area {
   height: calc(100vh - 6rem);
   border: 1px solid orange;
+}
+
+.tick-tack-toe .grid {
+  height: 100%;
+  border: 1px solid green;
+
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 33% 33% 33%;
+}
+
+.tick-tack-toe .grid-cell {
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  font-size: 30px;
+  text-align: center;
+}
+
+.tick-tack-toe .grid-cell.vacant:hover {
+  background-color: rgba(255, 255, 255, 0.062);
+}
+
+.tick-tack-toe .grid-cell .letter {
+  height: 100%;
+  width: 100%;
 }
 </style>
