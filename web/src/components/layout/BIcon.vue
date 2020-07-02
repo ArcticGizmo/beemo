@@ -1,11 +1,13 @@
 <template>
-  <component
-    class="b-icon"
-    :is="icon"
-    :viewBox="computedViewBox"
-    :preserveAsectRatio="aspectRatio"
-    :transform="transform"
-  />
+  <div class="b-icon">
+    <component
+      class="b-icon-svg"
+      :is="icon"
+      :viewBox="computedViewBox"
+      :preserveAsectRatio="aspectRatio"
+      :transform="transform"
+    />
+  </div>
 </template>
 
 <script>
@@ -47,7 +49,8 @@ export default {
     icon: { type: Object, default: null },
     viewBox: { type: [Array, Number], default: null },
     rotation: { type: Number, default: null },
-    scale: { type: [Object, Number], default: null },
+    reflectX: { type: Boolean, default: false },
+    reflectY: { type: Boolean, default: false },
     aspectRatio: { type: String, default: 'center' },
   },
   computed: {
@@ -56,8 +59,10 @@ export default {
       return parseViewBox(this.viewBox || icon.viewBox);
     },
     computedScale() {
-      const icon = this.icon || {};
-      return parseScale(this.scale || icon.scale || 1);
+      return {
+        x: this.reflectX ? -1 : 1,
+        y: this.reflectY ? -1 : 1,
+      };
     },
     computedRotation() {
       const icon = this.icon || {};
@@ -76,6 +81,12 @@ export default {
 <style>
 .b-icon {
   height: 2rem;
+  width: 2rem;
   transform-origin: 50% 50%;
+}
+
+.b-icon-svg {
+  height: 100%;
+  width: 100%;
 }
 </style>
