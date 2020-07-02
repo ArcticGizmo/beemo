@@ -4,7 +4,7 @@
       class="b-icon-svg"
       :is="icon"
       :viewBox="computedViewBox"
-      :preserveAsectRatio="aspectRatio"
+      :preserveAspectRatio="computedAspectRatio"
       :transform="transform"
     />
   </div>
@@ -38,9 +38,9 @@ const ASPECT_RATIOS = {
   fill: 'none',
   left: 'xMinYMid meet',
   top: 'xMidYMin meet',
-  right: 'xMaxYMix meet',
+  right: 'xMaxYMid meet',
   bottom: 'xMidYMax meet',
-  center: '',
+  center: 'xMidYMid meet',
 };
 
 export default {
@@ -67,6 +67,9 @@ export default {
     computedRotation() {
       const icon = this.icon || {};
       return this.rotation != null ? this.rotation : icon.rotation;
+    },
+    computedAspectRatio() {
+      return ASPECT_RATIOS[this.aspectRatio] || this.aspectRatio;
     },
     transform() {
       const rotation = `rotate(${this.computedRotation})`;
