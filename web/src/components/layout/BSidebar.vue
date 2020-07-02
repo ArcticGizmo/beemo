@@ -89,6 +89,7 @@ export default {
   display: flex;
   position: absolute;
   width: 100vw;
+  z-index: 100;
   min-height: calc(100% - 4rem);
   background-color: rgba(0, 0, 0, 0.1);
 }
