@@ -3,7 +3,6 @@
     <BHeader @sidebar-toggle="onSidebarToggle"></BHeader>
     <BSidebar :show="showSidebar" @select="onRouteSelect" @close="onSidebarClose"></BSidebar>
     <router-view class="page-view"></router-view>
-    <!-- <BFooter></BFooter> -->
   </div>
 </template>
 
@@ -40,8 +39,6 @@ export default {
 </script>
 
 <style>
-
-
 :root {
   --dark: #2c3531;
   --green: #116466;
@@ -51,12 +48,12 @@ export default {
 
   --b-normal: #253037;
   --b-darkish: #1f282e;
-  --b-dark: #1E262C;
-  --b-darkest: #1B232A;
+  --b-dark: #1e262c;
+  --b-darkest: #1b232a;
 
   --c-normal: #808892;
   --c-light: #9fa7b1;
-  --c-lightest: #F1F2F3;
+  --c-lightest: #f1f2f3;
 }
 
 body {
@@ -67,6 +64,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+div {
+  box-sizing: border-box;
+}
+
+.b-btn {
+  cursor: pointer;
+  background-color: #bebebe;
+  outline: none;
+}
+
+.b-btn:hover {
+  opacity: 0.75;
+}
 
 .page-view {
   background-color: var(--b-normal);

@@ -16,7 +16,7 @@ import TickTackToe from './components/pages/games/tick_tack_toe/TickTackToe.vue'
 Vue.use(VueRouter);
 
 const ROUTES = [
-  { path: '*', redirect: '/icons' },
+  { path: '*', redirect: '/games/tick_tack_toe' },
   { name: 'Home', path: '/home', component: Home },
   { name: 'Icons', path: '/icons', component: IconPage },
   { name: 'Sport', path: '/sport', component: Home },

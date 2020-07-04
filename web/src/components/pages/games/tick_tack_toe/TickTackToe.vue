@@ -12,6 +12,11 @@
           <BIcon class="letter" :icon="getIcon(cell.value)" />
         </div>
       </div>
+      <div class="overlay main-menu" @click.prevent>
+        <div class="inner">
+          <button class="b-btn start-btn">Start Game</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -95,6 +100,12 @@ export default {
   border: 1px solid orange;
 }
 
+.tick-tack-toe .overlay {
+  height: 100%;
+  top: -100%;
+  position: relative;
+}
+
 .tick-tack-toe .grid {
   height: 100%;
   border: 1px solid green;
@@ -117,5 +128,29 @@ export default {
 .tick-tack-toe .grid-cell .letter {
   height: 100%;
   width: 100%;
+}
+
+.tick-tack-toe .overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.tick-tack-toe .main-menu {
+  padding: 3rem;
+}
+
+.tick-tack-toe .main-menu .inner {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(80, 80, 80);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tick-tack-toe .main-menu .inner .start-btn {
+  height: 4rem;
+  width: 50%;
+  font-size: 2rem;
 }
 </style>
