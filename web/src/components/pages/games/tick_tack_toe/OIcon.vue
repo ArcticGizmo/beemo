@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'OIcon',
-  viewBox: [0, 0, 256, 256],
+  viewBox: [0, 0, 128, 128],
   rotation: 0,
   scale: 0,
 };

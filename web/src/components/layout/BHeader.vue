@@ -1,6 +1,8 @@
 <template>
   <header class="b-header" role="banner">
-    <BIcon class="sidebar-btn" :icon="menuIcon" :scale="0.5" @click.native="onSidebarToggle" />
+    <div class="sidebar-btn">
+      <BIcon class="sidebar-icon" :icon="menuIcon" :scale="0.5" @click.native="onSidebarToggle" />
+    </div>
     <BIcon class="logo" :icon="beemoIcon" />
     <slot class="b-header-content"></slot>
   </header>
@@ -50,12 +52,21 @@ header {
 
 .b-header .sidebar-btn {
   cursor: pointer;
+  height: 4rem;
+  width: 4rem;
+}
+
+.b-header .sidebar-btn .sidebar-icon {
+  width: 100%;
   height: 100%;
 }
 
 .b-header .logo {
   fill: #007fff;
-  /* fill: #f8ca0f; */
   height: 100%;
+}
+
+.b-header .logo svg {
+  width: auto;
 }
 </style>

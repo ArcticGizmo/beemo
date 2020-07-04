@@ -1,6 +1,7 @@
 <template>
   <div class="b-icon">
     <component
+      v-if="icon"
       class="b-icon-svg"
       :is="icon"
       :viewBox="computedViewBox"
@@ -51,6 +52,7 @@ export default {
     rotation: { type: Number, default: null },
     reflectX: { type: Boolean, default: false },
     reflectY: { type: Boolean, default: false },
+    scale: { type: [Number, Object], default: 1 },
     aspectRatio: { type: String, default: 'center' },
   },
   computed: {
@@ -59,9 +61,14 @@ export default {
       return parseViewBox(this.viewBox || icon.viewBox);
     },
     computedScale() {
+      const scale = parseScale(this.scale);
+
+      const xMod = this.reflectX ? -1 : 1;
+      const yMod = this.reflectY ? -1 : 1;
+
       return {
-        x: this.reflectX ? -1 : 1,
-        y: this.reflectY ? -1 : 1,
+        x: scale.x * xMod,
+        y: scale.y * yMod,
       };
     },
     computedRotation() {
