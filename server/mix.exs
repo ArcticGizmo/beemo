@@ -40,12 +40,12 @@ defmodule Beemo.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:corsica, "~> 1.1"},
-
       {:ecto_sql, "~> 3.0"},
       {:postgrex, "~> 0.15.0"},
+      {:elixir_uuid, "~> 1.2"},
 
       # this is a fix to work without OTP 22+
-      {:cowboy, "< 2.8.0", override: true},
+      {:cowboy, "< 2.8.0", override: true}
     ]
   end
 

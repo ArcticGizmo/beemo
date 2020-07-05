@@ -14,6 +14,10 @@ defmodule BeemoWeb.Endpoint do
     websocket: true,
     longpoll: false
 
+  socket "/tic-tac-toe-socket", BeemoWeb.TicTacToeSocket,
+    websocket: true,
+    longpoll: false
+
   plug Plug.Static,
     at: "/",
     from: :beemo,

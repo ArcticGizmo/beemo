@@ -14,7 +14,7 @@
       </div>
       <div class="overlay main-menu" @click.prevent>
         <div class="inner">
-          <button class="b-btn start-btn">Start Game</button>
+          <button class="b-btn start-btn" @click="startChannel">Start New Game</button>
         </div>
       </div>
     </div>
@@ -25,6 +25,7 @@
 import BIcon from '../../../layout/BIcon.vue';
 import XIcon from './XIcon.vue';
 import OIcon from './OIcon.vue';
+import Channel from '../../../../code/channel.js';
 
 function fill1DArray(num, callback = () => null) {
   const arr = [];
@@ -63,6 +64,7 @@ export default {
       player: 0,
       letters: ['X', 'O'],
       grid: createGrid(),
+      channel: new Channel(),
     };
   },
   methods: {
@@ -89,6 +91,18 @@ export default {
           return OIcon;
       }
       return null;
+    },
+    startChannel() {
+      console.dir('---- starting channel')
+      this.channel.create(this.$hostname, 'tic-tac-toe');
+      this.channel
+        .join()
+        .receive('ok', resp => {
+          console.dir(resp);
+        })
+        .receive('error', error => {
+          console.error(error);
+        });
     },
   },
 };
@@ -150,7 +164,7 @@ export default {
 
 .tick-tack-toe .main-menu .inner .start-btn {
   height: 4rem;
-  width: 50%;
+  width: auto;
   font-size: 2rem;
 }
 </style>
